@@ -37,10 +37,24 @@ const Protected = () => {
     }
   }, [navigate]);
 
-  const handleLogout = () => {
-    localStorage.removeItem('auth_token');
-    localStorage.removeItem('user_data');
-    navigate('/');
+  const handleLogout = async () => {
+    try {
+      const token = localStorage.getItem('auth_token');
+      if (token) {
+        await axios.post('http://127.0.0.1:8000/api/v1/auth/logout', {}, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+      }
+    } catch (error) {
+      console.error('Logout error:', error);
+    } finally {
+      // Clear local storage and navigate regardless of the API call result
+      localStorage.removeItem('auth_token');
+      localStorage.removeItem('user_data');
+      navigate('/');
+    }
   };
 
   return (

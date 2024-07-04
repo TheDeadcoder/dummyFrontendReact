@@ -15,7 +15,7 @@ const OAuthCallback = () => {
 
       if (accessToken) {
         try {
-          const response = await axios.post(`http://127.0.0.1:8000/auth/exchange-token`, {
+          const response = await axios.post(`http://127.0.0.1:8000/api/v1/auth/exchange-token`, {
             token: accessToken
           });
           console.log('Response from server:', response);

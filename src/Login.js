@@ -9,7 +9,7 @@ const Login = () => {
   const handleAuth = async (provider) => {
     setError(null);
     try {
-      const response = await axios.post(`http://127.0.0.1:8000/auth/${provider}`);
+      const response = await axios.post(`http://127.0.0.1:8000/api/v1/auth/${provider}`);
       if (response.data.redirect_url) {
         const authWindow = window.open(response.data.redirect_url, '_blank', 'width=500,height=600');
         
@@ -24,7 +24,7 @@ const Login = () => {
             window.removeEventListener('message', messageListener);
             
             try {
-              const tokenResponse = await axios.post('http://127.0.0.1:8000/auth/exchange-token', {
+              const tokenResponse = await axios.post('http://127.0.0.1:8000/api/v1/auth/exchange-token', {
                 token: event.data.token
               });
               console.log('User data:', tokenResponse.data);
